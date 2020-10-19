@@ -40,6 +40,7 @@ services:
       - 8080:8080
 
 ```
+
 单部署
 ```bash
 docker run --name mysql-rouyi --restart always -e MYSQL_ROOT_PASSWORD=root -v %USERPROFILE%/.mysql:/var/lib/mysql -d mysql:5.7.31
@@ -132,11 +133,6 @@ docker build -f Jenkins.DockerFile -t jenkins-all-in-one .
 docker 文档
 ```bash
 docker run -d -p 4000:4000 docs/docker.github.io:v17.03
-```
-
-## Mysql
-```bash
-docker run -d -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7.28
 ```
 
 ## sonatype/nexus3
