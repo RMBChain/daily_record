@@ -229,3 +229,7 @@ docker run -d --hostname my-rabbit --name some-rabbit -p 8080:15672 rabbitmq:3.8
 
 with prometheus
 [https://www.rabbitmq.com/prometheus.html#quick-start](https://www.rabbitmq.com/prometheus.html#quick-start)
+
+
+## prometheus
+docker run -it -d -p 20001:9090 -v D:/_git/prometheus.yaml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
