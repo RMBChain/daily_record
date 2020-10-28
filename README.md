@@ -232,4 +232,6 @@ with prometheus
 
 
 ## prometheus
+```bash
 docker run -it -d -p 20001:9090 -v D:/_git/prometheus.yaml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
+```
