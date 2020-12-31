@@ -1,3 +1,15 @@
+## Docker 镜像源
+```bash
+{
+    "registry-mirrors": [
+      "https://registry.docker-cn.com", 
+      "http://hub-mirror.c.163.com", 
+      "https://docker.mirrors.ustc.edu.cn",       
+      "http://hub-mirror.c.163.com", 
+      "http://hub-mirror.c.163.com"      
+    ]
+}
+```
 
 ## Docker In Docker
 ```bash
