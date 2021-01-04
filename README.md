@@ -1,4 +1,5 @@
 ## Docker 镜像源
+vi /etc/docker/daemon.json
 ```bash
 {
     "registry-mirrors": [
