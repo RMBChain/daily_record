@@ -11,6 +11,7 @@ vi /etc/docker/daemon.json
     ]
 }
 ```
+service docker restart
 
 ## Docker In Docker
 ```bash
