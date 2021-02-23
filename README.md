@@ -7,7 +7,7 @@ vi /etc/docker/daemon.json
       "http://hub-mirror.c.163.com", 
       "https://docker.mirrors.ustc.edu.cn",       
       "http://hub-mirror.c.163.com", 
-      "http://hub-mirror.c.163.com"      
+      "https://qern3h2q.mirror.aliyuncs.com"
     ]
 }
 ```
@@ -92,9 +92,12 @@ docker run -dit --name elk -p 5601:5601 -p 9200:9200 -p 5044:5044 sebp/elk:660
 ```
 wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.6.0-x86_64.rpm
 
-## Centos7
+## linux
 ```bash
 docker run -it -d --name centos7.7.1908 centos:centos7.7.1908
+docker run -it -d --name ubuntu:16.04   ubuntu:16.04
+docker run -it -d --name ubuntu:18.04   ubuntu:18.04
+docker run -it -d --name ubuntu:20.04   ubuntu:20.04
 ```
 ## Jenkins Blueocean
 ## Jenkins
