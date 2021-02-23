@@ -252,3 +252,24 @@ with prometheus
 ```bash
 docker run -it -d -p 20001:9090 -v D:/_git/prometheus.yaml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
 ```
+
+
+## 使用openssl生成证书
+```bash
+docker run -it -d --name ubuntu16.04 ubuntu:16.04
+docker exec -it ubuntu16.04 bash
+
+apt -y install apt-utils gcc make wget net-tools iputils-ping clang-format shellcheck vim
+wget https://www.openssl.org/source/openssl-1.1.1j.tar.gz
+tar -xzvf openssl-1.1.1j.tar.gz
+
+./config
+make install
+ln -sf /usr/local/ssl/bin/openssl /usr/local/bin/openssl
+openssl version -v
+
+openssl req -new -newkey rsa:2048 -sha256 -nodes -out example.csr -keyout example.key -subj "/C=CN/ST=Dalian/L=Dalian/O=example Inc./OU=Web Security/CN=cn"
+docker cp ubuntu16.04:/home/ .
+```
+
+
