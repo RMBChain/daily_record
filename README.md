@@ -253,3 +253,10 @@ with prometheus
 ```bash
 docker run -it -d -p 20001:9090 -v D:/_git/prometheus.yaml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
 ```
+
+
+## elasticsearch
+```bash
+docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d --name elasticsearch  -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
+docker run -d -p 9100:9100 docker.io/mobz/elasticsearch-head:5
+```
