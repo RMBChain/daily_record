@@ -76,11 +76,12 @@ http://prometheus:9090
 
 ## Redis
 ```bash
-docker run -it -d --name redis --restart always -p 6379:6379 redis:6.0.6
 
-docker run -it -d --name redisAdmin --restart always -p 16379:80 -e REDIS_1_HOST=192.168.199.144 -e REDIS_1_NAME=localhost erikdubbelboer/phpredisadmin:v1.13.1
+docker run -it -d --name redis -p 6379:6379 redis:6.0.6
 
-docker run -it -d --name redis-commander --restart always -p 16379:8081 -e REDIS_HOSTS=192.168.199.144 rediscommander/redis-commander:latest
+docker run -it -d --name redisAdmin --link redis:redis -p 16379:80 -e REDIS_1_HOST=redis -e REDIS_1_NAME=redis erikdubbelboer/phpredisadmin:v1.13.1
+
+docker run -it -d --name redis-commander --link redis:redis -p 16379:8081 -e REDIS_HOSTS=redis rediscommander/redis-commander:latest
 
 ```
 
