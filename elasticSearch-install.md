@@ -1,6 +1,19 @@
-#### 下载 elasticSearch 6.8.14
+#### ################################################################################################
+官    网: https://www.elastic.co/cn/
+下    载: https://www.elastic.co/cn/downloads/past-releases
+jdbc下载: https://www.elastic.co/cn/downloads/past-releases#jdbc-client
+dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64-setup.exe
+
+#### ################################################################################################
+#### 下载镜像
+docker pull kibana:7.11.1
+docker pull kibana:6.8.14
+docker pull elasticsearch:7.11.1
 docker pull elasticsearch:6.8.14
-docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
+docker pull mobz/elasticsearch-head:5
+
+#### 下载 elasticSearch 6.8.14
+docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.14
 
 ## 扩大虚拟内存空间
 vim /etc/sysctl.conf
@@ -15,9 +28,7 @@ echo "http.cors.enabled: true"    >> /usr/share/elasticsearch/config/elasticsear
 echo 'http.cors.allow-origin: "*"'>> /usr/share/elasticsearch/config/elasticsearch.yml
 docker restart es6
 
-
 #### 下载 elasticsearch-head:5
-docker pull mobz/elasticsearch-head:5
 docker run -it -d --name es6_head -p 9100:9100 mobz/elasticsearch-head:5
 
 ## 修改 406 问题： 修改 /usr/src/app/_site/vendor.js 中的 contentType

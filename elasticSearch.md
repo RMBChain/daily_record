@@ -1,3 +1,15 @@
+#### ################################################################################################
+官    网: https://www.elastic.co/cn/
+下    载: https://www.elastic.co/cn/downloads/past-releases
+jdbc下载: https://www.elastic.co/cn/downloads/past-releases#jdbc-client
+dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64-setup.exe
+
+#### ################################################################################################
+查看当前licence状态
+  curl -XGET http://localhost:9200/_license
+
+修改为试用版(开启sql client 远程连接)
+  curl -X POST  localhost:9200/_license/start_trial?acknowledge=true
 
 查看集群健康状态
   curl -X GET 'http://localhost:9200/_cluster/health'
@@ -99,8 +111,9 @@
     }
   }'
 
-取得数据数量
-  curl -X GET "localhost:9200/lesson/_count?pretty"
-  curl -X GET "localhost:9200/lesson/_doc/_count?pretty"  
+
+使用sql取得数据
+  curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM lesson"}'
+  curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT userName, age FROM person where age>5"}'
 
 
