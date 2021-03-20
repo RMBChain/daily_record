@@ -3,11 +3,12 @@ vi /etc/docker/daemon.json
 ```bash
 {
     "registry-mirrors": [
+      "https://qern3h2q.mirror.aliyuncs.com",
       "https://registry.docker-cn.com", 
       "http://hub-mirror.c.163.com", 
       "https://docker.mirrors.ustc.edu.cn",       
-      "http://hub-mirror.c.163.com", 
-      "https://qern3h2q.mirror.aliyuncs.com"
+      "http://hub-mirror.c.163.com"
+      
     ]
 }
 ```
@@ -223,15 +224,17 @@ docker run --volume=/var/run:/var/run:ro --volume=/sys:/sys:ro  --volume=/var/li
 docker run -d -v /opt/registry:/var/lib/registry -p 5000:5000 --restart=always --name registry registry:latest
 ```
 
-## Docker Registry-WEB
+## Docker Registry-WEB https://hub.docker.com/r/hyper/docker-registry-web/
 无搜索功能
 ```bash
-https://hub.docker.com/r/hyper/docker-registry-web/
+docker run -d -p 5000:5000 --name registry-srv registry:2
+docker run -d -p 9752:8080 --name registry-web --link registry-srv -e REGISTRY_URL=http://registry-srv:5000/v2 -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web 
 ```
 
-有搜索功能
+有搜索功能 https://github.com/kwk/docker-registry-frontend
 ```bash
-https://github.com/kwk/docker-registry-frontend
+docker run -d -p 5000:5000 --name registry-srv registry:2
+docker run -d -p 9753:80   --name docker-registry-frontend --link registry-srv -e ENV_DOCKER_REGISTRY_HOST=registry-srv -e ENV_DOCKER_REGISTRY_PORT=5000 konradkleine/docker-registry-frontend:v2
 ```
 
 ## Rabbitmq
