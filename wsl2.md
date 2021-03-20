@@ -45,4 +45,11 @@ memory=8GB
 swap=8GB
 localhostForwarding=true
 
+#### WSL2中安装docker 并开机启动
+# 把以下内容添加到脚本中
+#!/usr/bin/env bash
+sudo cgroupfs-mount
+sudo service docker start
 
+# 给脚本添加执行权限
+chmod +x /usr/local/sbin/start_docker.sh
