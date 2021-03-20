@@ -10,9 +10,11 @@ docker pull kibana:7.11.1
 docker pull kibana:6.8.14
 docker pull elasticsearch:7.11.1
 docker pull elasticsearch:6.8.14
+docker pull elasticsearch:6.8.13
 docker pull mobz/elasticsearch-head:5
 
-#### 下载 elasticSearch 6.8.14
+#### 下载 elasticSearch 6 
+docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
 docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.14
 
 ## 扩大虚拟内存空间
@@ -28,7 +30,18 @@ echo "http.cors.enabled: true"    >> /usr/share/elasticsearch/config/elasticsear
 echo 'http.cors.allow-origin: "*"'>> /usr/share/elasticsearch/config/elasticsearch.yml
 docker restart es6
 
+#### 下载 kibana
+docker pull kibana:7.11.1
+docker pull kibana:6.8.14
+docker pull kibana:6.8.13
+
+docker rm -f kibana
+docker run -it --net=host -e ELASTICSEARCH_HOSTS=http://localhost:9200 -p 5601:5601 --name kibana -d kibana:6.8.14
+docker run -it --link es6 -e ELASTICSEARCH_HOSTS=http://es6:9200 -p 5601:5601 --name kibana -d kibana:6.8.14
+
+
 #### 下载 elasticsearch-head:5
+docker pull mobz/elasticsearch-head:5
 docker run -it -d --name es6_head -p 9100:9100 mobz/elasticsearch-head:5
 
 ## 修改 406 问题： 修改 /usr/src/app/_site/vendor.js 中的 contentType

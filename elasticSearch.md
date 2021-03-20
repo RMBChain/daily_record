@@ -111,9 +111,9 @@ dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64
     }
   }'
 
+取得数据数量
+  curl -X GET "localhost:9200/lesson/_count?pretty"
+  curl -X GET "localhost:9200/lesson/_doc/_count?pretty"  
 
-使用sql取得数据
-  curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM lesson"}'
-  curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT userName, age FROM person where age>5"}'
-
-
+curl -X GET "localhost:9200/lesson/_doc/_count?pretty"  
+GET /_xpack
