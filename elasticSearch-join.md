@@ -1,3 +1,79 @@
+https://blog.csdn.net/qq_28244697/article/details/89605278
+
+一、创建映射关系
+curl -X PUT http://localhost:9200/test_join -H 'Content-Type: application/json' -d '
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "info": { 
+          "type": "join",
+          "relations": {
+            "classes": "teacher",
+            "teacher":"user"
+          }
+        }
+      }
+    }
+  }
+}'
+
+
+二、插入数据
+curl -X PUT 'http://localhost:9200/test_join/_doc/c1?routing=1&refresh' -H 'Content-Type: application/json' -d '{"classesName":"电信一班", "info": {"name":"classes"}}'
+curl -X PUT 'http://localhost:9200/test_join/_doc/t1?routing=1&refresh' -H 'Content-Type: application/json' -d '{"teacherName":"刘备",     "info": {"name":"teacher", "parent":"c1"}}'
+curl -X PUT 'http://localhost:9200/test_join/_doc/u1?routing=1&refresh' -H 'Content-Type: application/json' -d '{"userName"   :"刘灿",     "info": {"name":"user",    "parent":"t1"}}'
+curl -X PUT 'http://localhost:9200/test_join/_doc/u1?routing=1&refresh' -H 'Content-Type: application/json' -d '{"userName"   :"刘阑",     "info": {"name":"user",    "parent":"t1"}}'
+
+
+三、构建查询
+curl -X GET 'http://localhost:9200/test_join/_search?pretty' -H 'Content-Type: application/json'
+curl -X GET 'http://localhost:9200/test_join/_search?pretty' -H 'Content-Type: application/json' -d '
+  {
+    "query": {
+        "has_child":{
+          "type":"teacher",
+          "query":{
+            "bool":{
+              "must":[
+                {
+                  "has_child":{
+                    "type":"user",
+                    "query":{
+                      "match":{
+                        "userName":"刘灿"
+                      }
+                    },
+                    "inner_hits":{}
+                  }
+                },
+                {
+                  "match":{
+                    "teacherName": "刘备"
+                  }
+                }
+              ]
+            }
+          },"inner_hits":{}
+        }
+    }
+  }'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### ################################################################################################
 官    网: https://www.elastic.co/cn/
 下    载: https://www.elastic.co/cn/downloads/past-releases
@@ -125,9 +201,3 @@ dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64
   curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT * FROM lesson"}'
   curl -X GET 'localhost:9200/_xpack/sql' -H 'Content-Type: application/json' -d '{"query": "SELECT userName, age FROM person where age>5"}'
 
-取得数据数量
-  curl -X GET "localhost:9200/lesson/_count?pretty"
-  curl -X GET "localhost:9200/lesson/_doc/_count?pretty"  
-
-curl -X GET "localhost:9200/lesson/_doc/_count?pretty"  
-GET /_xpack
