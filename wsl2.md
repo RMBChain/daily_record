@@ -8,6 +8,9 @@ wsl -l -v
 wsl --set-default-version 2
 
 
+#### 修改默认用户是root  https://blog.csdn.net/jokeshe/article/details/107239159
+# 在powershell中运行
+Ubuntu1804 config --default-user root
 
 ##### 实现在wsl2中存在多个相同版本的wsl
 # https://winaero.com/export-import-wsl-linux-distro-windows-10/
@@ -15,7 +18,8 @@ wsl --set-default-version 2
 # export 
 wsl --export Ubuntu ubuntu.tar
 # import （需要指定全路径）
-wsl --import Ubuntu-18.04-registry d:\wsl2 d:\wsl2\ubuntu18.04.tar --version 2
+wsl --import Ubuntu-18.04-docker          D:\wsl2Distribution\Ubuntu18.04Docker         D:\wsl2Distribution\Ubuntu-18.04.tar --version 2
+wsl --import Ubuntu-18.04-docker-registry D:\wsl2Distribution\Ubuntu18.04DockerRegistry D:\wsl2Distribution\Ubuntu-18.04.tar --version 2
 # 删除wsl
 wsl --unregister Ubuntu-18.04-registry
 # 运行指定的发现版本

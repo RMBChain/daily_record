@@ -1,14 +1,30 @@
+## Ubuntu18.04安装Docker
+# 方式1
+apt -y install docker.io
+systemctl start docker
+systemctl enable docker
+
+# 方式2
+apt -y update
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+service docker start
+
+# 查看是否安装成功：
+docker --version
+
+
+
 ## Docker 镜像源
 vi /etc/docker/daemon.json
 ```bash
 {
-    "registry-mirrors": [
-      "https://qern3h2q.mirror.aliyuncs.com",
+    "registry-mirrors": [      
       "https://registry.docker-cn.com", 
       "http://hub-mirror.c.163.com", 
       "https://docker.mirrors.ustc.edu.cn",       
-      "http://hub-mirror.c.163.com"
-      
+      "http://hub-mirror.c.163.com",
+      "https://qern3h2q.mirror.aliyuncs.com"      
     ]
 }
 ```
@@ -227,14 +243,14 @@ docker run -d -v /opt/registry:/var/lib/registry -p 5000:5000 --restart=always -
 ## Docker Registry-WEB https://hub.docker.com/r/hyper/docker-registry-web/
 无搜索功能
 ```bash
-docker run -d -p 5000:5000 --name registry-srv registry:2
-docker run -d -p 9752:8080 --name registry-web --link registry-srv -e REGISTRY_URL=http://registry-srv:5000/v2 -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web 
+docker run -d --restart always -p 5000:5000 --name registry-srv registry:2
+docker run -d --restart always -p 9752:8080 --name registry-web --link registry-srv -e REGISTRY_URL=http://registry-srv:5000/v2 -e REGISTRY_NAME=localhost:5000 hyper/docker-registry-web 
 ```
 
 有搜索功能 https://github.com/kwk/docker-registry-frontend
 ```bash
-docker run -d -p 5000:5000 --name registry-srv registry:2
-docker run -d -p 9753:80   --name docker-registry-frontend --link registry-srv -e ENV_DOCKER_REGISTRY_HOST=registry-srv -e ENV_DOCKER_REGISTRY_PORT=5000 konradkleine/docker-registry-frontend:v2
+docker run -d --restart always -p 5000:5000 --name registry-srv registry:2
+docker run -d --restart always -p 9753:80   --name docker-registry-frontend --link registry-srv -e ENV_DOCKER_REGISTRY_HOST=registry-srv -e ENV_DOCKER_REGISTRY_PORT=5000 konradkleine/docker-registry-frontend:v2
 ```
 
 ## Rabbitmq
