@@ -8,6 +8,7 @@ dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64
 #### 下载镜像
 docker pull kibana:7.11.1
 docker pull kibana:6.8.14
+docker pull kibana:6.8.13
 docker pull elasticsearch:7.11.1
 docker pull elasticsearch:6.8.14
 docker pull elasticsearch:6.8.13
