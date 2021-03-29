@@ -15,8 +15,8 @@ docker pull elasticsearch:6.8.13
 docker pull mobz/elasticsearch-head:5
 
 #### 下载 elasticSearch 6 
-docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
-docker run -it -d --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.14
+docker run -it -d --restart always --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
+docker run -it -d --restart always --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.14
 
 ## 扩大虚拟内存空间
 vim /etc/sysctl.conf
@@ -43,7 +43,7 @@ docker run -it --link es6 -e ELASTICSEARCH_HOSTS=http://es6:9200 -p 5601:5601 --
 
 #### 下载 elasticsearch-head:5
 docker pull mobz/elasticsearch-head:5
-docker run -it -d --name es6_head -p 9100:9100 mobz/elasticsearch-head:5
+docker run -it -d --restart always --name es6_head -p 9100:9100 mobz/elasticsearch-head:5
 
 ## 修改 406 问题： 修改 /usr/src/app/_site/vendor.js 中的 contentType
 # 将vendor.js拷贝出来

@@ -9,6 +9,24 @@ echo "deb http://mirrors.aliyun.com/ubuntu xenial-security  main restricted univ
 ```
 
 ###################### Ubuntu18
+#默认源
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+
+```bash
+mv /etc/apt/sources.list /etc/apt/sources.list.bak
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic main           restricted                    " >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic-updates   main restricted                    " >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic universe                                     " >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic-updates                   universe           " >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic                                    multiverse" >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic-updates                            multiverse" >> /etc/apt/sources.list
+echo "deb http://archive.ubuntu.com/ubuntu/  bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://security.ubuntu.com/ubuntu/ bionic-security  main restricted                    " >> /etc/apt/sources.list
+echo "deb http://security.ubuntu.com/ubuntu/ bionic-security                  universe           " >> /etc/apt/sources.list
+echo "deb http://security.ubuntu.com/ubuntu/ bionic-security                           multiverse" >> /etc/apt/sources.list
+```
+
+
 #阿里源
 ```bash
 mv /etc/apt/sources.list /etc/apt/sources.list.bak
