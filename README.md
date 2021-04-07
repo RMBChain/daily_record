@@ -63,7 +63,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-
+      MYSQL_ROOT_HOST: '%'
   adminer:
     image: adminer
     restart: always
@@ -74,7 +74,7 @@ services:
 
 单部署
 ```bash
-docker run --name mysql-rouyi --restart always -e MYSQL_ROOT_PASSWORD=root -v %USERPROFILE%/.mysql:/var/lib/mysql -d mysql:5.7.31
+docker run --name mysql-rouyi --restart always -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -v %USERPROFILE%/.mysql:/var/lib/mysql -d mysql:5.7.31
 ```
 
 Prometheus
