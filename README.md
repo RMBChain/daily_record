@@ -75,7 +75,7 @@ services:
 含有管理端 adminer
 ```bash
 docker run --name mysql_db_server --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
-docker run --name mysql-adminer -d -p 8080:8080 adminer:4.8.0
+docker run --name mysql-adminer --link mysql_db_server:db -d -p 33306:8080 adminer:4.8.0
 ```
 
 含有管理端 phpmyadmin
