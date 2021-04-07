@@ -237,7 +237,7 @@ docker run --volume=/var/run:/var/run:ro --volume=/sys:/sys:ro  --volume=/var/li
 
 ## Docker Registry（本地docker hub）
 ```bash
-docker run -d -v /opt/registry:/var/lib/registry -p 5000:5000 --restart=always --name registry registry:latest
+docker run -d -v /opt/registry:/var/lib/registry -p 5000:5000 --restart=always --name registry registry:2.7.1
 ```
 
 ## Docker Registry-WEB https://hub.docker.com/r/hyper/docker-registry-web/
