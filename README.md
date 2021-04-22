@@ -314,7 +314,7 @@ docker run -d --hostname "114.116.212.71" \
 
 
 git clone ssh://git@114.116.212.71:7022/root/23423.git
-git clone http://root:gitlab123!$@114.116.212.71:7080/root/23423.git
+git clone http://username:password$@114.116.212.71:7080/root/23423.git
 ```
 
 
