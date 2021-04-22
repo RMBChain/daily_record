@@ -57,3 +57,15 @@ sudo service docker start
 
 # 给脚本添加执行权限
 chmod +x /usr/local/sbin/start_docker.sh
+
+#### WSL2所在路径
+# 安装路径
+C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc
+# 虚拟机路径
+C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\ext4.vhdx
+# 根路径对应win10路径
+????????????
+
+#### ubuntu 设置root用户名
+sudo passwd root
+
