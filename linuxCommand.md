@@ -6,4 +6,7 @@ mkfs -t ext4 /dev/vdb
 # mount硬盘到目录
 mount /dev/vdb /cherry
 
+#### ubuntu 设置root用户名
+sudo passwd root
+
 
