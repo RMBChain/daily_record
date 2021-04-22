@@ -1,3 +1,4 @@
+
 #### wsl 命令 https://docs.microsoft.com/en-us/windows/wsl/reference
 # 查看证每个发行版使用的 WSL 版本
 wsl --list --verbose
@@ -7,6 +8,8 @@ wsl -l -v
 # 安装新的 Ubuntu时，先将 WSL 2 设置为默认：
 wsl --set-default-version 2
 
+# 设置默认分发版
+wsl -s Ubuntu-18.04
 
 #### 修改默认用户是root  https://blog.csdn.net/jokeshe/article/details/107239159
 # 在powershell中运行
@@ -50,13 +53,14 @@ swap=8GB
 localhostForwarding=true
 
 #### WSL2中安装docker 并开机启动
-# 把以下内容添加到脚本中
-#!/usr/bin/env bash
-sudo cgroupfs-mount
-sudo service docker start
+# 安装
+apt -y update
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+service docker start
 
-# 给脚本添加执行权限
-chmod +x /usr/local/sbin/start_docker.sh
+# 开机启动: 把以下内容添加到/root/.bashrc 脚本中
+service docker start
 
 #### WSL2所在路径
 # 安装路径

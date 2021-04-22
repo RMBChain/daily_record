@@ -4,7 +4,7 @@ apt -y install docker.io
 systemctl start docker
 systemctl enable docker
 
-# 方式2
+# 方式2， wsl2中安装docker用这个方法.
 apt -y update
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
@@ -12,7 +12,6 @@ service docker start
 
 # 查看是否安装成功：
 docker --version
-
 
 
 ## Docker 镜像源
