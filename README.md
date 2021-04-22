@@ -290,3 +290,32 @@ docker run -it -d -p 20001:9090 -v D:/_git/prometheus.yaml:/etc/prometheus/prome
 docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d --name elasticsearch  -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
 docker run -d -p 9100:9100 docker.io/mobz/elasticsearch-head:5
 ```
+
+## gitlab 注意两个端口的映射，external_url要求内外一样，gitlab_shell_ssh_port内外不一样
+```bash
+docker pull gitlab/gitlab-ce:13.8.8-ce.0
+
+mkdir /secondDisk
+mkdir /secondDisk/gitlab
+
+export GITLAB_HOME=/secondDisk/gitlab
+docker rm -f gitlab
+docker run -d --hostname "114.116.212.71" \
+  -p 7443:443 \
+  -p 7080:7080 \
+  -p 7022:22 \
+  --env GITLAB_OMNIBUS_CONFIG="external_url 'http://114.116.212.71:7080'; gitlab_rails['lfs_enabled'] = true; gitlab_rails['gitlab_shell_ssh_port'] = 7022;" \
+  --name gitlab \
+  --restart always \
+  --volume $GITLAB_HOME/config:/etc/gitlab   \
+  --volume $GITLAB_HOME/logs:/var/log/gitlab \
+  --volume $GITLAB_HOME/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:13.8.8-ce.0
+
+
+git clone ssh://git@114.116.212.71:7022/root/23423.git
+git clone http://root:gitlab123!$@114.116.212.71:7080/root/23423.git
+```
+
+
+
