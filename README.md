@@ -48,7 +48,7 @@ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock docker:19.03.12
 docker run --rm -v 代码所在目录:/workdir hhatto/gocloc .
 ```
 ## Mysql
-含有管理端
+含有管理端 adminer
 ```bash
 # docker stack deploy -c mysql.yml mysql
 version: '3.1'
@@ -70,6 +70,18 @@ services:
     ports:
       - 8080:8080
 
+```
+
+含有管理端 adminer
+```bash
+docker run --name mysql_db_server --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run --name mysql-adminer --link mysql_db_server:db -d -p 33306:8080 adminer:4.8.0
+```
+
+含有管理端 phpmyadmin
+```bash
+docker run --name mysql_db_server --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin:5.1.0
 ```
 
 单部署
