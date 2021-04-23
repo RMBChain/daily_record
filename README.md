@@ -193,6 +193,8 @@ docker build -f Jenkins.DockerFile -t jenkins-all-in-one .
       replicas: 1
 ```
 
+访问 http://localhost:8055/jenkins
+
 ## docker.github
 docker 文档
 ```bash
