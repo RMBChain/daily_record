@@ -1,10 +1,14 @@
-## Ubuntu18.04安装Docker
-# 方式1
+#
+# Ubuntu18.04安装Docker
+#### 方式1
+```bash
 apt -y install docker.io
 systemctl start docker
 systemctl enable docker
+```
 
-# 方式2， wsl2中安装docker用这个方法.
+#### 方式2， wsl2中安装docker用这个方法.
+```bash
 apt -y update
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
@@ -12,9 +16,21 @@ service docker start
 
 # 查看是否安装成功：
 docker --version
+```
 
+#
+# Docker Compose
+```bash
+# 下载 要安装其他版本的 Compose，请替换 1.29.1。
+curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# 权限
+chmod +x /usr/local/bin/docker-compose
+# 创建软链：
+ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
 
-## Docker 镜像源
+#
+# Docker 镜像源
 vi /etc/docker/daemon.json
 ```bash
 {
@@ -29,7 +45,8 @@ vi /etc/docker/daemon.json
 ```
 service docker restart
 
-## Docker In Docker
+#
+# Docker In Docker
 ```bash
 docker run -it --rm --name dind-sample --privileged --name dind-sample docker:19.03.12-dind
 ```
@@ -41,12 +58,13 @@ or
 ```bash
 docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock docker:19.03.12-dind "/bin/sh"
 ```
-
-## 代码行数统计
+#
+# 代码行数统计
 ```bash
 docker run --rm -v 代码所在目录:/workdir hhatto/gocloc .
 ```
-## Mysql
+
+# Mysql
 含有管理端 adminer
 ```bash
 # docker stack deploy -c mysql.yml mysql
@@ -174,6 +192,8 @@ docker build -f Jenkins.DockerFile -t jenkins-all-in-one .
      deploy:
       replicas: 1
 ```
+
+访问 http://localhost:8055/jenkins
 
 ## docker.github
 docker 文档
