@@ -339,4 +339,7 @@ git clone http://username:password$@114.116.212.71:7080/root/23423.git
 优化
 https://blog.csdn.net/ouyang_peng/article/details/84066417
 
+备份
+https://www.cnblogs.com/breakering/p/9712040.html
+
 ## 
