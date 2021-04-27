@@ -195,6 +195,10 @@ docker build -f Jenkins.DockerFile -t jenkins-all-in-one .
 
 访问 http://localhost:8055/jenkins
 
+
+修改交换空间 https://www.cnblogs.com/wang-yaz/p/9395005.html
+
+
 ## docker.github
 docker 文档
 ```bash
