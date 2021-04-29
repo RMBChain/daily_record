@@ -40,7 +40,11 @@ vm.max_map_count=262144
 // wsl2 重启: sysctl -p
 
 ## 设置允许跨域访问：在 /usr/share/elasticsearch/config/elasticsearch.yml里面添加如下代码： 
-docker exec -it es6 bash echo "http.cors.enabled: true"    >> /usr/share/elasticsearch/config/elasticsearch.yml echo 'http.cors.allow-origin: "*"'>> /usr/share/elasticsearch/config/elasticsearch.yml
+docker exec -it es6 bash 
+
+echo "http.cors.enabled: true"    >> /usr/share/elasticsearch/config/elasticsearch.yml 
+
+echo 'http.cors.allow-origin: "*"'>> /usr/share/elasticsearch/config/elasticsearch.yml
 
 docker restart es6
 
