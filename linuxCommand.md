@@ -14,3 +14,20 @@ mount /dev/vdb /secondDisk
 #### ubuntu 设置root用户名
 sudo passwd root
 
+
+# 批量更新git
+``` bash
+baseDir=`pwd`
+#ls | while read file
+for file in $(ls) 
+do
+  echo $file
+  if [ -d $file ] ; then
+    cd $file
+    git pull
+    cd $baseDir
+  fi
+done
+```
+
+
