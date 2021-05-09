@@ -30,8 +30,6 @@ docker pull mobz/elasticsearch-head:5
 #### 下载 elasticSearch 6 
 docker run -it -d --restart always --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.13
 
-docker run -it -d --restart always --name es6 -p 9200:9200 -p 9300:9300 elasticsearch:6.8.14
-
 ## 扩大虚拟内存空间
 vim /etc/sysctl.conf
 //在最后一行上加上
@@ -40,13 +38,24 @@ vm.max_map_count=262144
 // wsl2 重启: sysctl -p
 
 ## 设置允许跨域访问：在 /usr/share/elasticsearch/config/elasticsearch.yml里面添加如下代码： 
+```
 docker exec -it es6 bash 
-
 echo "http.cors.enabled: true"    >> /usr/share/elasticsearch/config/elasticsearch.yml 
-
 echo 'http.cors.allow-origin: "*"'>> /usr/share/elasticsearch/config/elasticsearch.yml
 
+# 集群配置 begin
+echo 'cluster.name: es-cluster'   >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'node.name: node02'          >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'node.master: true'          >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'node.data: true'            >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'network.host: 0.0.0.0'      >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'http.port: 9200'            >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'discovery.zen.ping.unicast.hosts: ["192.168.50.150","192.168.50.151"]' >> /usr/share/elasticsearch/config/elasticsearch.yml
+echo 'discovery.zen.minimum_master_nodes: 2'                                 >> /usr/share/elasticsearch/config/elasticsearch.yml
+# 集群配置 end
+exit
 docker restart es6
+```
 
 #### 下载 kibana
 docker pull kibana:7.11.1
