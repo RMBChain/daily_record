@@ -69,7 +69,6 @@ docker restart es6
 ```
 
 #### 下载 kibana
-```
 docker pull kibana:7.11.1
 
 docker pull kibana:6.8.14
@@ -81,10 +80,9 @@ docker rm -f kibana
 docker run -it --net=host -e ELASTICSEARCH_HOSTS=http://localhost:9200 -p 5601:5601 --name kibana -d kibana:6.8.14
 
 docker run -it --link es6 -e ELASTICSEARCH_HOSTS=http://es6:9200 -p 5601:5601 --name kibana -d kibana:6.8.14
-```
+
 
 #### 下载 elasticsearch-head:5
-```
 
 docker pull mobz/elasticsearch-head:5
 
@@ -108,5 +106,3 @@ vi vendor.js
 docker cp vendor.js es6_head:/usr/src/app/_site/vendor.js
 
 # ctrl + F5 强制刷新浏览器
-```
-
