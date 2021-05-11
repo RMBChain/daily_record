@@ -26,12 +26,10 @@ docker run -d --restart always                \
        --name es6                             \
        -p 9200:9200                           \
        -p 9300:9300                           \
-       -v $PWD/es_data:/var/lib/elasticsearch \
-       -v $PWD/es_log:/var/log/elasticsearch  \
-       -e "discovery.type=single-node"        \
-       -e "http.cors.enabled=true"            \
-       -e "http.cors.allow-origin=*"          \
-       -v /home/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+       -e "discovery.type=single-node"   `# 配置单节点` \
+       -e "http.cors.enabled=true"       `# 配置跨域`   \
+       -e "http.cors.allow-origin=*"     `# 配置跨域`   \
+       -v /home/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
        elasticsearch:6.8.13
 
 curl http://127.0.0.1:9200/_cat/health	
