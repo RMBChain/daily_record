@@ -43,6 +43,59 @@ curl -H "Content-Type: application/json" -X POST 'http://localhost:9200/test_ind
 curl 'http://localhost:9200/test_index/doc/11'
 ```
 
+# 安装集群es 注意 network.bind_host 和 network.publish_host 的作用
+```
+# run on ip____1
+cd /chain_net
+rm -r -f es_data && mkdir es_data && chmod 777 es_data
+rm -r -f es_logs && mkdir es_logs && chmod 777 es_logs
+docker rm -f esrepo_cluster_node_1
+docker run -d --restart always                \
+       --name esrepo_cluster_node_1           \
+       --network host                         \
+       -e "discovery.zen.ping.unicast.hosts=ip____2"  `# 配置其它节点` \
+       -e cluster.name=esrepo-cluster                       `# 配置跨域`   \
+       -e "network.bind_host=0.0.0.0"                       `# 配置跨域`   \
+       -e "network.publish_host=ip____1"                       `# 配置跨域`   \
+       -e "node.name=esrepo_cluster_node_1"                 `# 配置跨域`   \
+       -e "http.cors.enabled=true"                          `# 配置跨域`   \
+       -e "http.cors.allow-origin=*"                        `# 配置跨域`   \
+       -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"                  `# java配置`   \
+       -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
+       -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
+       elasticsearch:6.8.13
+docker logs -f esrepo_cluster_node_1
+
+# run on ip____2
+cd /chain_net
+rm -r -f es_data && mkdir es_data && chmod 777 es_data
+rm -r -f es_logs && mkdir es_logs && chmod 777 es_logs
+docker rm -f esrepo_cluster_node_2
+docker run -d --restart always                \
+       --name esrepo_cluster_node_2           \
+       --network host                         \
+       -e "discovery.zen.ping.unicast.hosts=ip____1"  `# 配置其它节点` \
+       -e cluster.name=esrepo-cluster                       `# 配置跨域`   \
+       -e "network.bind_host=0.0.0.0"                       `# 配置跨域`   \
+       -e "network.publish_host=ip____2"                       `# 配置跨域`   \
+       -e "node.name=esrepo_cluster_node_2"                 `# 配置跨域`   \
+       -e "http.cors.enabled=true"                          `# 配置跨域`   \
+       -e "http.cors.allow-origin=*"                        `# 配置跨域`   \
+       -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"                  `# java配置`   \
+       -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
+       -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
+       elasticsearch:6.8.13
+docker logs -f esrepo_cluster_node_2
+
+curl http://127.0.0.1:9200/_cat/health	
+curl -H "Content-Type: application/json" -X POST 'http://localhost:9200/test_index/doc/11' -d '{ "txt": "just test"}'
+curl 'http://localhost:9200/test_index/doc/11'
+
+
+curl -X PUT -H "Content-Type: application/json" 'http://localhost:9200/test_index'     -d '{  "settings":{    "number_of_shards":5,    "number_of_replicas":2,    "max_result_window": "100000"  }}'
+curl http://localhost:9200/_cluster/health?pretty
+```
+
 # 扩大虚拟内存空间
 ```
 vim /etc/sysctl.conf
