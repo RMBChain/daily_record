@@ -21,6 +21,7 @@ docker pull mobz/elasticsearch-head:5
 # 安装单节点es
 
 ```
+
 # mkdir es_data && chmod 777 es_data
 # mkdir es_logs && chmod 777 es_logs
 
