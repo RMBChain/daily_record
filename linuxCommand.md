@@ -50,6 +50,6 @@ ssh root@47.242.46.201
 
 ## 方式二 通过命令指定证书 (在wsl下使用时，需要把证书放到linux的盘符下)
 ```
-chmod 600 ChainSecretKeyHK.pem  
-ssh -i ChainSecretKeyHK.pem root@192.168.0.101
+chmod 600 xxxxx.pem  
+ssh -i xxxxx.pem root@192.168.0.101
 ```
