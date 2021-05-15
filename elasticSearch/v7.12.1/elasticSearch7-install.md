@@ -19,8 +19,8 @@ docker pull mobz/elasticsearch-head:5
 
 ```
 
-# 安装单节点es7
-
+# 安装单节点 elasticsearch 7.11.2
+## 
 ```
 # mkdir es_data && chmod 777 es_data
 # mkdir es_logs && chmod 777 es_logs
@@ -34,9 +34,28 @@ docker run -d --restart always                \
        -e "http.cors.enabled=true"                     `# 配置跨域`             \
        -e "http.cors.allow-origin=*"                   `# 配置跨域`             \
        -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
-       -e "xpack.security.enabled=true"                `# 配置x-pack`           \
-       -e "xpack.security.transport.ssl.enabled=true"  `# 配置x-pack`           \
-       -e "xpack.security.transport.ssl.enabled=true"  `# 配置x-pack`           \
+       -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
+       -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
+       -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
+       elasticsearch:7.12.1
+
+docker logs -f es7
+```
+## 开启 x-pack 密码
+```
+# mkdir es_data && chmod 777 es_data
+# mkdir es_logs && chmod 777 es_logs
+
+docker rm -f es7
+docker run -d --restart always                \
+       --name es7                             \
+       -p 9200:9200                           \
+       -p 9300:9300                           \
+       -e "discovery.type=single-node"                 `# 配置单节点`           \
+       -e "http.cors.enabled=true"                     `# 配置跨域`             \
+       -e "http.cors.allow-origin=*"                   `# 配置跨域`             \
+       -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
+       -e "xpack.security.enabled=true"                `# 配置x-pack, 使用密码` \
        -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
        -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
        -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
@@ -49,13 +68,16 @@ docker exec -it es7 bash
 cd /usr/share/elasticsearch/bin
 ./elasticsearch-setup-passwords interactive
 
+```
 
-# 通过 curl 进行访问
+## 通过 curl 进行访问
+```
+
 curl --user elastic:123456 'http://localhost:9200/?pretty'
 curl --user elastic:123456  -XPUT 'http://localhost:9200/test1?pretty'
-curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/11' -d '{ "txt": "just test11", "age":121}'
-curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/12' -d '{ "txt": "just test12", "age":121}'
-curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/13' -d '{ "txt": "just test13", "age":123}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/11' -d '{ "txt": "test11", "me":[{"age":12},{"age":13},{"age":14}]}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/12' -d '{ "txt": "test12", "age":121}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/13' -d '{ "txt": "test13", "age":123}'
 
 curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/_search?pretty' -d '{"query":{"bool":{"must":[{"match":{"age":121}}]}}}'
 
@@ -69,6 +91,30 @@ docker exec -it es7 bash
 cd /usr/share/elasticsearch/bin
 ./elasticsearch-sql-cli http://elastic:123456@localhost:9200
 
+```
+
+# 安装 kibana:7.11.2, 配置文件 /usr/share/kibana/config/kibana.yml
+```
+docker rm -f kibana7
+docker run -d --name kibana7 -p 5601:5601 --link es7 kibana:7.11.2
+#waite a memont 
+
+export init_cmd="rm   /usr/share/kibana/config/kibana.yml  "
+export init_cmd="${init_cmd} && echo 'server.name: kibana'                                 >> /usr/share/kibana/config/kibana.yml "
+export init_cmd="${init_cmd} && echo 'server.host: \"0\"'                                  >> /usr/share/kibana/config/kibana.yml "
+export init_cmd="${init_cmd} && echo 'elasticsearch.hosts: [ \"http://es7:9200\" ]'        >> /usr/share/kibana/config/kibana.yml "
+export init_cmd="${init_cmd} && echo 'elasticsearch.username: \"kibana\"'                  >> /usr/share/kibana/config/kibana.yml "
+export init_cmd="${init_cmd} && echo 'elasticsearch.password: \"123456\"'                  >> /usr/share/kibana/config/kibana.yml "
+export init_cmd="${init_cmd} && echo 'monitoring.ui.container.elasticsearch.enabled: true' >> /usr/share/kibana/config/kibana.yml "
+docker exec -it kibana7 sh -c "${init_cmd}"
+
+docker exec -it kibana7 sh -c "cat /usr/share/kibana/config/kibana.yml"
+
+docker restart kibana7
+
+docker logs -f kibana7
+
+docker exec -it kibana7 bash
 ```
 
 # 安装集群es 注意 network.bind_host 和 network.publish_host 的作用
