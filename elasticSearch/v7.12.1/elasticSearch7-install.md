@@ -34,8 +34,9 @@ docker run -d --restart always                \
        -e "http.cors.enabled=true"                     `# 配置跨域`             \
        -e "http.cors.allow-origin=*"                   `# 配置跨域`             \
        -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
-       -e "xpack.security.enabled=true"                `# 配置跨域`             \
-       -e "xpack.security.transport.ssl.enabled=true"  `# 配置跨域`             \
+       -e "xpack.security.enabled=true"                `# 配置x-pack`           \
+       -e "xpack.security.transport.ssl.enabled=true"  `# 配置x-pack`           \
+       -e "xpack.security.transport.ssl.enabled=true"  `# 配置x-pack`           \
        -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
        -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
        -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
@@ -58,10 +59,15 @@ curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://
 
 curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/_search?pretty' -d '{"query":{"bool":{"must":[{"match":{"age":121}}]}}}'
 
-curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test/_doc/_sql?format=txt' -d '{"query": "SELECT txt,age FROM test LIMIT 10"}'
 
+# 使用sql进行查询
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/_sql?format=json&pretty' -d '{"query": "SELECT txt,age FROM test LIMIT 10"}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/_sql?format=json&pretty' -d '{"query": "SELECT txt,age FROM test LIMIT 10 WHERE age=121"}'
 
-
+# 使用sql cli
+docker exec -it es7 bash
+cd /usr/share/elasticsearch/bin
+./elasticsearch-sql-cli http://elastic:123456@localhost:9200
 
 ```
 
