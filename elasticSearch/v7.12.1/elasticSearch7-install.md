@@ -15,35 +15,54 @@ dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64
 ```
 docker pull elasticsearch:7.11.2
 docker pull kibana:7.11.2
-
-docker pull kibana:6.8.13
-docker pull elasticsearch:6.8.13
 docker pull mobz/elasticsearch-head:5
+
 ```
 
-# 安装单节点es
+# 安装单节点es7
 
 ```
 # mkdir es_data && chmod 777 es_data
 # mkdir es_logs && chmod 777 es_logs
 
-docker rm -f es6
+docker rm -f es7
 docker run -d --restart always                \
-       --name es6                             \
+       --name es7                             \
        -p 9200:9200                           \
        -p 9300:9300                           \
-       -e "discovery.type=single-node"      `# 配置单节点` \
-       -e "http.cors.enabled=true"          `# 配置跨域`   \
-       -e "http.cors.allow-origin=*"        `# 配置跨域`   \
-       -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"  `# java配置`   \
+       -e "discovery.type=single-node"                 `# 配置单节点`           \
+       -e "http.cors.enabled=true"                     `# 配置跨域`             \
+       -e "http.cors.allow-origin=*"                   `# 配置跨域`             \
+       -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
+       -e "xpack.security.enabled=true"                `# 配置跨域`             \
+       -e "xpack.security.transport.ssl.enabled=true"  `# 配置跨域`             \
+       -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
        -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
        -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
-       elasticsearch:6.8.13
+       elasticsearch:7.12.1
+
+docker logs -f es7
+
+# 生成密码
+docker exec -it es7 bash
+cd /usr/share/elasticsearch/bin
+./elasticsearch-setup-passwords interactive
 
 
-curl http://127.0.0.1:9200/_cat/health	
-curl -H "Content-Type: application/json" -X POST 'http://localhost:9200/test_index/doc/11' -d '{ "txt": "just test"}'
-curl 'http://localhost:9200/test_index/doc/11'
+# 通过 curl 进行访问
+curl --user elastic:123456 'http://localhost:9200/?pretty'
+curl --user elastic:123456  -XPUT 'http://localhost:9200/test1?pretty'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/11' -d '{ "txt": "just test11", "age":121}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/12' -d '{ "txt": "just test12", "age":121}'
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/13' -d '{ "txt": "just test13", "age":123}'
+
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test1/_doc/_search?pretty' -d '{"query":{"bool":{"must":[{"match":{"age":121}}]}}}'
+
+curl --user elastic:123456  -H "Content-Type: application/json" -X POST 'http://localhost:9200/test/_doc/_sql?format=txt' -d '{"query": "SELECT txt,age FROM test LIMIT 10"}'
+
+
+
+
 ```
 
 # 安装集群es 注意 network.bind_host 和 network.publish_host 的作用
