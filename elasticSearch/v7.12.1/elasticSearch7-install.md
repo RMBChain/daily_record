@@ -20,7 +20,7 @@ docker pull mobz/elasticsearch-head:5
 ```
 
 # 安装单节点 elasticsearch 7.11.2
-## 
+## 无密码模式
 ```
 # mkdir es_data && chmod 777 es_data
 # mkdir es_logs && chmod 777 es_logs
