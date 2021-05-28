@@ -95,17 +95,22 @@ cd /usr/share/elasticsearch/bin
 
 # 安装 kibana:7.12.1, 配置文件 /usr/share/kibana/config/kibana.yml
 ```
-docker rm -f kibana7
-docker run -d --name kibana7 -p 5601:5601 --link es7 kibana:7.12.1
+docker rm   -f kibana7
+docker run  -d --name kibana7 -p 5601:5601 --link es7 kibana:7.12.1
+docker logs -f kibana7
+
 #waite a memont 
 
 export init_cmd="rm   /usr/share/kibana/config/kibana.yml  "
+export init_cmd="${init_cmd} && echo 'i18n.locale: "zh-CN"'                                >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'server.name: kibana'                                 >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'server.host: \"0\"'                                  >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'elasticsearch.hosts: [ \"http://es7:9200\" ]'        >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'elasticsearch.username: \"kibana\"'                  >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'elasticsearch.password: \"123456\"'                  >> /usr/share/kibana/config/kibana.yml "
 export init_cmd="${init_cmd} && echo 'monitoring.ui.container.elasticsearch.enabled: true' >> /usr/share/kibana/config/kibana.yml "
+
+
 docker exec -it kibana7 sh -c "${init_cmd}"
 
 docker exec -it kibana7 sh -c "cat /usr/share/kibana/config/kibana.yml"
