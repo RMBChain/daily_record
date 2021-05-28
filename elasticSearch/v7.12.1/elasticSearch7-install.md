@@ -22,8 +22,8 @@ docker pull mobz/elasticsearch-head:5
 # 安装单节点 elasticsearch 7.12.1
 ## 无密码模式
 ```
-# mkdir es_data && chmod 777 es_data
-# mkdir es_logs && chmod 777 es_logs
+# mkdir es7_data && chmod 777 es7_data
+# mkdir es7_logs && chmod 777 es7_logs
 
 docker rm -f es7
 docker run -d --restart always                \
