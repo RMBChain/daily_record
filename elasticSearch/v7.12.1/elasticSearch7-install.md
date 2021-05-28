@@ -13,13 +13,13 @@ dbViewer: https://download.dbeaver.com/community/21.0.0/dbeaver-ce-21.0.0-x86_64
 # 下载镜像
 
 ```
-docker pull elasticsearch:7.11.2
-docker pull kibana:7.11.2
+docker pull elasticsearch:7.12.1
+docker pull kibana:7.12.1
 docker pull mobz/elasticsearch-head:5
 
 ```
 
-# 安装单节点 elasticsearch 7.11.2
+# 安装单节点 elasticsearch 7.12.1
 ## 无密码模式
 ```
 # mkdir es_data && chmod 777 es_data
@@ -35,16 +35,16 @@ docker run -d --restart always                \
        -e "http.cors.allow-origin=*"                   `# 配置跨域`             \
        -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
        -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
-       -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
-       -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
+       -v $PWD/es7_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
+       -v $PWD/es7_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
        elasticsearch:7.12.1
 
 docker logs -f es7
 ```
 ## 开启 x-pack 密码
 ```
-# mkdir es_data && chmod 777 es_data
-# mkdir es_logs && chmod 777 es_logs
+# mkdir es7_data && chmod 777 es7_data
+# mkdir es7_logs && chmod 777 es7_logs
 
 docker rm -f es7
 docker run -d --restart always                \
@@ -57,8 +57,8 @@ docker run -d --restart always                \
        -e "http.cors.allow-headers=Authorization"      `# 跨域允许设置的头信息` \
        -e "xpack.security.enabled=true"                `# 配置x-pack, 使用密码` \
        -e "ES_JAVA_OPTS=-Xms512m -Xmx512m"             `# java配置`             \
-       -v $PWD/es_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
-       -v $PWD/es_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
+       -v $PWD/es7_data:/usr/share/elasticsearch/data  `# 配置数据路径` \
+       -v $PWD/es7_logs:/usr/share/elasticsearch/logs  `# 配置日志路径` \
        elasticsearch:7.12.1
 
 docker logs -f es7
@@ -93,10 +93,10 @@ cd /usr/share/elasticsearch/bin
 
 ```
 
-# 安装 kibana:7.11.2, 配置文件 /usr/share/kibana/config/kibana.yml
+# 安装 kibana:7.12.1, 配置文件 /usr/share/kibana/config/kibana.yml
 ```
 docker rm -f kibana7
-docker run -d --name kibana7 -p 5601:5601 --link es7 kibana:7.11.2
+docker run -d --name kibana7 -p 5601:5601 --link es7 kibana:7.12.1
 #waite a memont 
 
 export init_cmd="rm   /usr/share/kibana/config/kibana.yml  "
