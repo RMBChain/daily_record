@@ -91,19 +91,32 @@ services:
 
 含有管理端 adminer
 ```bash
-docker run --name mysql_db_server --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
 docker run --name mysql-adminer --link mysql_db_server:db -d -p 33306:8080 adminer:4.8.0
 ```
 
 含有管理端 phpmyadmin
 ```bash
-docker run --name mysql_db_server --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
 docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin:5.1.0
 ```
 
 单部署
 ```bash
-docker run --name mysql-rouyi --restart always -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -v %USERPROFILE%/.mysql:/var/lib/mysql -d mysql:5.7.31
+docker rm -f mysql
+docker run -d --name mysql   \
+      --restart always       \
+      -p 3306:3306           \
+      -e MYSQL_ROOT_HOST='%'         `# 开启root的远程访问`    \
+      -e MYSQL_ROOT_PASSWORD=root    `# root用户的密码`        \
+      -e TZ=Asia/Shanghai           `# 设置时区`               \
+      -v /home/mysql/conf:/etc/mysql/conf.d `#配置文件挂载到当前宿主机的/home/mysql/conf` \
+      -v /home/mysql/data:/var/lib/mysql    `#数据挂载到当前宿主机的 /home/mysql/data`    \
+      mysql:5.7.31                                                                        \
+      --character-set-server=utf8mb4        `# 设置字符编码`                              \
+      --collation-server=utf8mb4_unicode_ci `# 设置字符编码`
+
+docker logs -f mysql
 ```
 
 Prometheus
