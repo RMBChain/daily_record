@@ -112,9 +112,10 @@ docker run -d --name mysql   \
       -e TZ=Asia/Shanghai           `# 设置时区`               \
       -v /home/mysql/conf:/etc/mysql/conf.d `#配置文件挂载到当前宿主机的/home/mysql/conf` \
       -v /home/mysql/data:/var/lib/mysql    `#数据挂载到当前宿主机的 /home/mysql/data`    \
-      mysql:5.7.31                                                                        \
-      --character-set-server=utf8mb4        `# 设置字符编码`                              \
-      --collation-server=utf8mb4_unicode_ci `# 设置字符编码`
+      mysql:5.7.31                                                \
+      --character-set-server=utf8mb4        `# 设置字符编码`      \
+      --collation-server=utf8mb4_unicode_ci `# 设置字符编码`      \
+      --lower_case_table_names=1            `# 表名不区分大小写`
 
 docker logs -f mysql
 ```
