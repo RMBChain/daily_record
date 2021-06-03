@@ -235,17 +235,17 @@ docker run –itd -p 8086:8086 -p 8083:8083 -e INFLUXDB_ADMIN_ENABLED=true --nam
 docker run -it -p 8080:8080 --name tomcat9.0.30_jdk8 tomat:9.0.30-jdk8-openjdk
 ```
 
-
 ## AB(apche) 并发测试
 ```bash
-docker run -it --rm --name nginxtest -p 9999:80 nginx:1.19.0
-docker run -it --rm --link nginxtest -w /usr/local/apache2/bin httpd:2.4.46-alpine sh
+docker run -it --rm httpd:2.4.48 ab -v -r -n 100 -c 10 https://www.baidu.com/
 ```
 
-```bash
-ping nginxtest
-ab -n 1000 -c 1000 http://nginxtest/
-```
+-c 并发数量
+
+-n 总请求数量
+
+结果解析：https://www.cnblogs.com/gumuzi/p/5617232.html
+
 
 ## Nginx
 ```bash
