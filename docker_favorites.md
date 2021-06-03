@@ -237,7 +237,8 @@ docker run -it -p 8080:8080 --name tomcat9.0.30_jdk8 tomat:9.0.30-jdk8-openjdk
 
 ## AB(apche) 并发测试
 ```bash
-docker run -it --rm httpd:2.4.48 ab -v -r -n 100 -c 10 https://www.baidu.com/
+docker run -it --rm            httpd:2.4.48 ab -v -r -n 100 -c 10 http://www.baidu.com/
+docker run -it --rm --net=host httpd:2.4.48 ab -v -r -n 100 -c 10 http://localhost:8080/  #测试宿主机
 ```
 
 -c 并发数量
