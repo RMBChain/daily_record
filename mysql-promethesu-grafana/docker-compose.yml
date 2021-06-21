@@ -23,7 +23,7 @@ services:
     image: grafana/grafana
     environment:
       # 配置 Grafana 的默认根 URL。
-      - GF_SERVER_ROOT_URL=http://192.168.100.107:20002
+      - GF_SERVER_ROOT_URL=http://localhost:20002
       # 配置 Grafana 的默认 admin 密码。
       - GF_SECURITY_ADMIN_PASSWORD=admin
     ports:
