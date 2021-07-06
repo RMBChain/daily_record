@@ -1,5 +1,5 @@
 #
-# Ubuntu18.04安装Docker
+## Ubuntu18.04安装Docker
 #### 方式1
 ```bash
 apt -y install docker.io
@@ -19,7 +19,7 @@ docker --version
 ```
 
 #
-# Docker Compose
+## Docker Compose
 ```bash
 # 下载 要安装其他版本的 Compose，请替换 1.29.1。
 curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -30,7 +30,7 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
 #
-# Docker 镜像源
+## Docker 镜像源
 vi /etc/docker/daemon.json
 ```bash
 {
@@ -46,7 +46,7 @@ vi /etc/docker/daemon.json
 service docker restart
 
 #
-# Docker In Docker
+## Docker In Docker
 ```bash
 docker run -it --rm --name dind-sample --privileged --name dind-sample docker:19.03.12-dind
 ```
@@ -59,12 +59,12 @@ or
 docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock docker:19.03.12-dind "/bin/sh"
 ```
 #
-# 代码行数统计
+## 代码行数统计
 ```bash
 docker run --rm -v 代码所在目录:/workdir hhatto/gocloc .
 ```
 
-# Mysql
+## Mysql
 含有管理端 adminer
 ```bash
 # docker stack deploy -c mysql.yml mysql
