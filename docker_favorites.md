@@ -253,6 +253,11 @@ docker run -it --rm --net=host httpd:2.4.48 ab -v -r -n 100 -c 10 http://localho
 docker run -d -p 7070:80 nginx:stable
 ```
 
+发布当前目录
+```bash
+docker run --rm -v $PWD:/usr/share/nginx/html -p 9090:80 nginx:1.18
+```
+
 ## busybox(linux 工具集)
 ```bash
 docker run -it busybox
