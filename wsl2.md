@@ -75,3 +75,10 @@ sudo passwd root
 
 #### WSL2使用xrdp实现图形桌面
 https://zhuanlan.zhihu.com/p/149501381
+
+
+
+# WSL2 下安装GoLand工具
+tar -xzf goland-2017.3.3.tar.gz -C /opt
+cd /opt/GoLand-2017.3.3/bin
+./goland.sh
