@@ -73,3 +73,5 @@ C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04o
 #### ubuntu 设置root用户名
 sudo passwd root
 
+#### WSL2使用xrdp实现图形桌面
+https://zhuanlan.zhihu.com/p/149501381
