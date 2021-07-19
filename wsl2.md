@@ -113,3 +113,11 @@ cd /opt/GoLand-2017.3.3/bin
 \\wsl$
 ```
 
+# 配置 WSL2 访问 Windows 上的代理
+```
+https://zhuanlan.zhihu.com/p/153124468
+cat /etc/resolv.conf
+export ALL_PROXY="http://172.19.80.1:7890"
+```
+
+
