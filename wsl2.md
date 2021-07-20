@@ -100,8 +100,32 @@ C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04o
 sudo passwd root
 
 # WSL2使用xrdp实现图形桌面
+
 https://zhuanlan.zhihu.com/p/149501381
 
+## 安装 xfce4 xrdp
+```
+sudo apt update
+sudo apt install -y xfce4 xrdp
+```
+
+## 修改xrdp默认端口 vim /etc/xrdp/xrdp.ini
+
+```
+# 修改下面这一行,将默认的3389改成其他端口即可
+port=3390
+```
+
+## 为当前用户指定登录session类型 vim ~/.xsession
+```
+# 写入下面内容(就一行)
+xfce4-session
+```
+
+## 启动xrdp 由于WSL2里面不能用systemd,所以需要手动启动
+```
+sudo /etc/init.d/xrdp start
+```
 
 # WSL2 下安装GoLand工具
 tar -xzf goland-2017.3.3.tar.gz -C /opt
