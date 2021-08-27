@@ -1,0 +1,25 @@
+version: '3'
+services:
+  redis-master:
+    image: redis:6.2.1
+    ports:
+      - 6379:6379
+    networks:
+      - redis-cluster-network
+
+  redis-slave:
+    image: redis:6.2.1
+    ports: 
+      - 6479:6379    
+    depends_on: 
+      - redis-master
+    links:
+      - redis-master
+    entrypoint: /bin/bash -c "(sleep 5 && redis-cli REPLICAOF redis-master 6379) & redis-server"
+    networks:
+      - redis-cluster-network
+
+networks:
+  redis-cluster-network:
+    driver: bridge
+

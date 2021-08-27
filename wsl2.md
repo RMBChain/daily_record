@@ -73,7 +73,7 @@ localhostForwarding=true
 ```
 
 # WSL2中安装docker 并开机启动
-## 安装
+### 安装
 ```
 apt -y update
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -81,48 +81,56 @@ sh get-docker.sh
 service docker start
 ```
 
-## 开机启动: 把以下内容添加到/root/.bashrc 脚本中
+### 开机启动: 把以下内容添加到/root/.bashrc 脚本中
 ```
 service docker start
 ```
 
 # WSL2所在路径
-## 安装路径
+### 安装路径
+```
 C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc
+```
 
-## 虚拟机路径
+### 虚拟机路径
+```
 C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\ext4.vhdx
+```
 
-## 根路径对应win10路径
+### 根路径对应win10路径
+```
 ????????????
+```
 
 # ubuntu 设置root用户名
+```
 sudo passwd root
+```
 
 # WSL2使用xrdp实现图形桌面
 
 https://zhuanlan.zhihu.com/p/149501381
 
-## 安装 xfce4 xrdp
+### 安装 xfce4 xrdp
 ```
 sudo apt update
 sudo apt install -y xfce4 xrdp
 ```
 
-## 修改xrdp默认端口 vim /etc/xrdp/xrdp.ini
+### 修改xrdp默认端口 vim /etc/xrdp/xrdp.ini
 
 ```
 # 修改下面这一行,将默认的3389改成其他端口即可
 port=3390
 ```
 
-## 为当前用户指定登录session类型 vim ~/.xsession
+### 为当前用户指定登录session类型 vim ~/.xsession
 ```
 # 写入下面内容(就一行)
 xfce4-session
 ```
 
-## 启动xrdp 由于WSL2里面不能用systemd,所以需要手动启动
+### 启动xrdp 由于WSL2里面不能用systemd,所以需要手动启动
 ```
 sudo /etc/init.d/xrdp start
 ```
@@ -144,4 +152,19 @@ cat /etc/resolv.conf
 export ALL_PROXY="http://172.19.80.1:7890"
 ```
 
+# 无法访问网络的解决办法
+修改 /etc/resolv.conf，将内容修改成如下:
+```
+[network]
+generateResolvConf = false
+nameserver 114.114.114.114
+```
+
+```
+114.114.114.114 是国内移动、电信和联通通用的DNS
+8.8.8.8         是GOOGLE公司提供的DNS
+180.76.76.76    百度提供的DNS
+223.5.5.5       阿里提供的DNS
+223.6.6.6       阿里提供的DNS
+```
 

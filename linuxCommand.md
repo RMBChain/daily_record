@@ -48,8 +48,11 @@ ssh-add -k xxxxx.pem
 ssh root@47.242.46.201
 ```
 
-## 方式二 通过命令指定证书 (在wsl下使用时，需要把证书放到linux的盘符下)
+## 方式二 通过命令指定证书
 ```
-chmod 600 xxxxx.pem  
-ssh -i xxxxx.pem root@192.168.0.101
+# **在wsl下使用时，需要把证书放到linux的盘符下**
+chmod 600 xxxx.pem
+ssh-agent bash
+ssh-add xxxx.pem
+ssh root@172.19.0.2 // or ssh -i xxxx.pem root@172.19.0.2
 ```
