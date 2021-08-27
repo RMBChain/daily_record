@@ -91,13 +91,23 @@ services:
 
 含有管理端 adminer
 ```bash
-docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run -d --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root \
+      mysql:5.7.31                                               \
+      --character-set-server=utf8mb4        `# 设置字符编码`      \
+      --collation-server=utf8mb4_unicode_ci `# 设置字符编码`      \
+      --lower_case_table_names=1            `# 表名不区分大小写`
+
 docker run --name mysql-adminer --link mysql_db_server:db -d -p 33306:8080 adminer:4.8.0
 ```
 
 含有管理端 phpmyadmin
 ```bash
-docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.31
+docker run -d --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' -e MYSQL_ROOT_PASSWORD=root \
+       mysql:5.7.31                                              \
+       --character-set-server=utf8mb4        `# 设置字符编码`      \
+       --collation-server=utf8mb4_unicode_ci `# 设置字符编码`      \
+       --lower_case_table_names=1            `# 表名不区分大小写`
+
 docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin:5.1.0
 ```
 
