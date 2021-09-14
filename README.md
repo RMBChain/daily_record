@@ -170,7 +170,19 @@ docker run -it -d --name ubuntu:16.04   ubuntu:16.04
 docker run -it -d --name ubuntu:18.04   ubuntu:18.04
 docker run -it -d --name ubuntu:20.04   ubuntu:20.04
 ```
+
+## JAVA 8 (openjdk)
+```
+docker run -it openjdk:8u292-jdk bash
+```
+
+## JAVA 8 (Oracle Jdk)
+```
+ 
+```
+
 ## Jenkins Blueocean
+
 ## Jenkins
 ```bash
 docker run -p 8080:8080 -p 50000:50000 jenkins
@@ -179,6 +191,7 @@ docker run -p 8080:8080 -p 50000:50000 jenkins
 ```bash
 docker run -it --rm --name my-maven-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn clean install
 ```
+
 ## Jenkins、Git、Maven
 Jenkins.DockerFile
 ```bash
