@@ -33,7 +33,7 @@ passwd
 ssh root@localhost
 ```
 
-# 容器外登陆
+# 登陆另一台容器
 ```
 ssh root@ssh1
 ssh root@ssh2
