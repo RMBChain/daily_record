@@ -39,5 +39,10 @@ ssh root@ssh1
 ssh root@ssh2
 ```
 
+# Docker外登陆
+```
+ssh root@IP -p 1022
+ssh root@IP -p 2022
+```
 
 
