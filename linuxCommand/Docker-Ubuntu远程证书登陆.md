@@ -1,4 +1,4 @@
-# 原理
+# 免密(证书)登陆原理
 把自己的证书公钥放到服务器的信任列表(authorized_keys)中。
 
 本例子演示两个docker交换公钥
@@ -64,7 +64,7 @@ cat ssh1_id_rsa.pub >> authorized_keys
 cat authorized_keys
 ```
 
-# 8. 免密登陆
+# 8. 免密(证书)登陆
 在ssh1中执行
 ```
 ssh -o stricthostkeychecking=no root@ssh2
