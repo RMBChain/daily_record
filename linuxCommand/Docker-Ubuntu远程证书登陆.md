@@ -1,13 +1,14 @@
 # 免密(证书)登陆原理
 把自己的证书公钥放到服务器的信任列表(authorized_keys)中。
 
-本例子演示两个docker交换公钥
+本例子演示docker共享公钥私钥
 
-# 1. 运行两个容器
+# 1. 运行容器
 ```
 docker network create -d bridge ssh-network
-docker run --rm -it --name ssh1 --hostname ssh1 -p 1022:22 --network ssh-network ubuntu:18.04 bash
-docker run --rm -it --name ssh2 --hostname ssh2 -p 2022:22 --network ssh-network ubuntu:18.04 bash
+docker run --rm -it -v $PWD/.ssh:/root/.ssh/ --name sshMain --hostname sshMain --network ssh-network ubuntu:18.04 bash
+docker run --rm -it -v $PWD/.ssh:/root/.ssh/ --name ssh1    --hostname ssh1    --network ssh-network ubuntu:18.04 bash
+docker run --rm -it -v $PWD/.ssh:/root/.ssh/ --name ssh2    --hostname ssh2    --network ssh-network ubuntu:18.04 bash
 ```
 
 # 2. 在容器中安装服务
