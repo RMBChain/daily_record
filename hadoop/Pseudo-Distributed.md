@@ -88,10 +88,7 @@ docker cp Pseudo-Distributed/hadoop-env.sh   hadoop:/hadoop-3.3.1/etc/hadoop/
 在容器内执行
 ```
 
-mkdir -p /root/data/dfs/name
-mkdir -p /root/data/data/dfs/data
-
-export HADOOP_SECURE_DN_USER=root 
+export HDFS_DATANODE_SECURE_USER=root 
 export HDFS_NAMENODE_USER=root 
 export HDFS_SECONDARYNAMENODE_USER=root 
 export YARN_RESOURCEMANAGER_USER=root 
