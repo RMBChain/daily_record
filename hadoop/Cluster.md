@@ -156,7 +156,7 @@ DataNode
 http://localhost:9870/
 
 
-# 8. 测试：
+# 7. 测试：
 添加目录
 ```
 /hadoop-3.3.1/bin/hdfs dfs -mkdir /data
