@@ -1,15 +1,11 @@
-# 1. 运行容器
+# 1. 构建基础镜像
 ```
-docker run --rm --name openjdk8_hadoop331 -it openjdk:8u292-jdk bash
-apt -y update
+docker build -f SingleNode.dockerfile -t openjdk8_hadoop_singlenode:3.3.1 .
 ```
 
-# 2. 在容器内下载hadoop
+# 2. 启动单节点
 ```
-cd /
-wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.1.tar.gz
-tar -zxvf hadoop-3.3.1.tar.gz
-rm hadoop-3.3.1.tar.gz
+docker run --rm --name hadoop331_singlenode -w /hadoop-3.3.1 --net host -it openjdk8_hadoop_singlenode:3.3.1 bash
 ```
 
 # 3. 在容器内运行example
