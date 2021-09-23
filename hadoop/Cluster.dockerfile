@@ -13,7 +13,9 @@ ADD ./Cluster/sshd_config  /etc/ssh/sshd_config
 RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.1.tar.gz && \
     tar -zxvf hadoop-3.3.1.tar.gz                                          && \
     rm hadoop-3.3.1.tar.gz
+ENV HADOOP_HOME  /hadoop-3.3.1
 ADD ./Cluster/hadoop_cfg/  /hadoop-3.3.1/etc/hadoop/
+
 
 # setting user for hadoop
 ENV HDFS_DATANODE_SECURE_USER   root

@@ -8,11 +8,17 @@
 # 1. 构建基础镜像
 ```
 docker build -f Cluster.dockerfile -t openjdk8_hadoop_cluster:3.3.1 .
+# docker build --no-cache -f Cluster.dockerfile -t openjdk8_hadoop_cluster:3.3.1 .
 ```
 
 # 2. 启动主节点
 *name必须是master，和配置文件中一致*
 ```
+docker rm -f master
+docker rm -f work1
+docker rm -f work2
+docker rm -f work3
+
 docker network create -d bridge hadoop_network
 docker run -it --rm -w /hadoop-3.3.1 --name master --hostname master    \
        --network hadoop_network                                         \
@@ -59,22 +65,19 @@ http://localhost:9870/
 
 
 # 6. 测试：
-添加目录
-```
-/hadoop-3.3.1/bin/hdfs dfs -mkdir /input
-```
 
-添加文件到新建的目录中
 ```
-/hadoop-3.3.1/bin/hdfs dfs -put etc/hadoop/*.xml /input
+cd /hadoop-3.3.1
+/hadoop-3.3.1/bin/hdfs dfs -mkdir /input                   # 添加目录
+/hadoop-3.3.1/bin/hdfs dfs -put   etc/hadoop/*.xml /input  # 添加文件到新建的目录中
+/hadoop-3.3.1/bin/hdfs dfs -put   share/ /input            # 添加文件到新建的目录中
 ```
 
 在 http://localhost:9870/ 的 Utilities->Browse the file system 中查看
 
-
 运行测试程序
 ```
-/hadoop-3.3.1bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount /input /output
+/hadoop-3.3.1/bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount /input /output
 ```
 
 查看结果
