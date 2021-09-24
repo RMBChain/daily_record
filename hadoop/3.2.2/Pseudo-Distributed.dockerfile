@@ -10,10 +10,10 @@ RUN  mkdir ~/.ssh && cd ~/.ssh             && \
 ADD ./Pseudo-Distributed/sshd_config  /etc/ssh/sshd_config
 
 # download and config hadoop
-RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.1.tar.gz && \
-    tar -zxvf hadoop-3.3.1.tar.gz                                          && \
-    rm hadoop-3.3.1.tar.gz
-ADD ./Pseudo-Distributed/hadoop_cfg/  /hadoop-3.3.1/etc/hadoop/
+RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz && \
+    tar -xvf hadoop-3.2.2.tar.gz                                                 && \
+    rm hadoop-3.2.2.tar.gz
+ADD ./Pseudo-Distributed/hadoop_cfg/  /hadoop-3.2.2/etc/hadoop/
 
 # setting user for hadoop
 ENV HDFS_DATANODE_SECURE_USER   root
@@ -23,9 +23,9 @@ ENV YARN_RESOURCEMANAGER_USER   root
 ENV YARN_NODEMANAGER_USER       root
 
 # format namenode
-RUN /hadoop-3.3.1/bin/hadoop namenode -format
+RUN /hadoop-3.2.2/bin/hadoop namenode -format
 
 # CMD
-CMD sh -c "service ssh restart && /hadoop-3.3.1/sbin/start-all.sh && bash"
+CMD sh -c "service ssh restart && /hadoop-3.2.2/sbin/start-all.sh && bash"
 
 EXPOSE 9870 9000 9864
