@@ -10,11 +10,11 @@ RUN  mkdir ~/.ssh && cd ~/.ssh             && \
 ADD ./Cluster/sshd_config  /etc/ssh/sshd_config
 
 # download and config hadoop
-RUN wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.1.tar.gz && \
-    tar -zxvf hadoop-3.3.1.tar.gz                                          && \
-    rm hadoop-3.3.1.tar.gz
-ENV HADOOP_HOME  /hadoop-3.3.1
-ADD ./Cluster/hadoop_cfg/  /hadoop-3.3.1/etc/hadoop/
+RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz && \
+    tar -xvf hadoop-3.2.2.tar.gz                                                && \
+    rm hadoop-3.2.2.tar.gz
+ENV HADOOP_HOME  /hadoop-3.2.2
+ADD ./Cluster/hadoop_cfg/  /hadoop-3.2.2/etc/hadoop/
 
 
 # setting user for hadoop
@@ -25,7 +25,7 @@ ENV YARN_RESOURCEMANAGER_USER   root
 ENV YARN_NODEMANAGER_USER       root
 
 # format namenode
-RUN /hadoop-3.3.1/bin/hadoop namenode -format && rm -rf /tmp
+RUN /hadoop-3.2.2/bin/hadoop namenode -format && rm -rf /tmp
 
 # CMD
 ADD ./Cluster/entyrpoint.sh  /
