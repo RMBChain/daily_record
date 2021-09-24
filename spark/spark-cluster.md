@@ -1,91 +1,26 @@
-# ÍêÈ«·Ö²¼Ê½ ²Î¿¼
-- https://blog.csdn.net/l1682686/article/details/107814620
-- https://hadoop.apache.org/docs/stable/index.html
-
-²É¿Ó: ½ÚµãµÄÍøÂçÃû³Æ²»ÒªÓĞÈÎºÎ¿´ÆğÀ´ÌØ±ğµÄ×Ö·û¡£×îºÃÈ«Ó¢ÎÄ *Ğ¡Ğ´* ×ÖÄ¸ºÍÊı×Ö£¬Ç§Íò²»ÒªÓĞ¡°-¡±¡¢¡°_¡±¡¢¡°%¡±µÈµÈ¡£
-
-
-# 1. ¹¹½¨»ù´¡¾µÏñ
+# 1. æ„å»ºåŸºç¡€é•œåƒ
 ```
 docker build -f spark-cluster.dockerfile -t spark-3.1.2-bin-hadoop3.2:v1 .
 # docker build --no-cache -f spark-cluster.dockerfile -t openjdk8_hadoop_cluster:3.3.1 .
 ```
 
-# 2. Æô¶¯Ö÷½Úµã
-*name±ØĞëÊÇmaster£¬ºÍÅäÖÃÎÄ¼şÖĞÒ»ÖÂ*
+# 2. å¯åŠ¨ä¸»èŠ‚ç‚¹
 ```
-docker rm -f master
-docker rm -f work1
-docker rm -f work2
-docker rm -f work3
+docker network create -d bridge spark_network
 
-docker network create -d bridge hadoop_network
-docker run -it --rm -w /hadoop-3.3.1 --name master --hostname master    \
-       --network hadoop_network                                         \
-       -p 9870:9870 -p 9000:9000 -p 9864:9864 -p 9866:9866 -p 8088:8088 \
-       openjdk8_hadoop_cluster:3.3.1
-
+docker run -it --name master --hostname master -w /spark-3.1.2-bin-hadoop3.2 --rm --network spark_network -p 8080:8080 -p 7077:7077 spark-3.1.2-bin-hadoop3.2:v1 bash -c "./sbin/start-master.sh && bash"
 ```
 
-
-# 2. Æô¶¯worker½Úµã
+# 2. å¯åŠ¨å·¥ä½œèŠ‚ç‚¹
 ```
-docker run -it --rm -w /hadoop-3.3.1 --name work1 --hostname work1 --network hadoop_network openjdk8_hadoop_cluster:3.3.1
-docker run -it --rm -w /hadoop-3.3.1 --name work2 --hostname work2 --network hadoop_network openjdk8_hadoop_cluster:3.3.1
-docker run -it --rm -w /hadoop-3.3.1 --name work3 --hostname work3 --network hadoop_network openjdk8_hadoop_cluster:3.3.1
-```
-
-
-# 3. ²é¿´hadoop°æ±¾
-ÔÚÈİÆ÷ÄÚÖ´ĞĞ
-```
-cd /hadoop-3.3.1
-bin/hadoop version
+docker run -it --name work1 --hostname work1 -w /spark-3.1.2-bin-hadoop3.2 --rm --network spark_network spark-3.1.2-bin-hadoop3.2:v1 bash -c "./sbin/start-worker.sh spark://master:7077 && bash"
+docker run -it --name work2 --hostname work2 -w /spark-3.1.2-bin-hadoop3.2 --rm --network spark_network spark-3.1.2-bin-hadoop3.2:v1 bash -c "./sbin/start-worker.sh spark://master:7077 && bash"
+docker run -it --name work3 --hostname work3 -w /spark-3.1.2-bin-hadoop3.2 --rm --network spark_network spark-3.1.2-bin-hadoop3.2:v1 bash -c "./sbin/start-worker.sh spark://master:7077 && bash"
 ```
 
-
-# 4. Ê¹ÓÃjps²é¿´·şÎñ
-```
-jsp
-```
-
-Ó¦¸ÃÓĞÏÂÃæ6Ïî:
-```
-NameNode
-DataNode
-Jps
-NodeManager
-SecondaryNameNode
-ResourceManager
-```
+# 3. æŸ¥çœ‹çŠ¶æ€
+http://localhost:8080
 
 
-# 5. ·ÃÎÊWEB
-http://localhost:9870/
-
-
-# 6. ²âÊÔ£º
-
-```
-cd /hadoop-3.3.1
-/hadoop-3.3.1/bin/hdfs dfs -mkdir /input                   # Ìí¼ÓÄ¿Â¼
-/hadoop-3.3.1/bin/hdfs dfs -put   etc/hadoop/*.xml /input  # Ìí¼ÓÎÄ¼şµ½ĞÂ½¨µÄÄ¿Â¼ÖĞ
-/hadoop-3.3.1/bin/hdfs dfs -put   share/ /input            # Ìí¼ÓÎÄ¼şµ½ĞÂ½¨µÄÄ¿Â¼ÖĞ
-```
-
-ÔÚ http://localhost:9870/ µÄ Utilities->Browse the file system ÖĞ²é¿´
-
-ÔËĞĞ²âÊÔ³ÌĞò
-```
-/hadoop-3.3.1/bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount /input /output
-```
-
-²é¿´½á¹û
-```
-/hadoop-3.3.1/bin/hdfs dfs -cat /output/*
-```
-
-ÇåÀíÄ¿Â¼
-```
-/hadoop-3.3.1/bin/hdfs dfs -rm -r /output
-```
+# 4. è¿›å…¥spark-shell
+/spark-3.1.2-bin-hadoop3.2/bin/spark-shell
