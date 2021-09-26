@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+export JAVA_HOME=/usr/local/openjdk-8
+
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,5 +19,33 @@
 # limitations under the License.
 #
 
-# A Spark Worker will be started on each of the machines listed below.
-localhost
+# Stop all spark daemons.
+# Run this on the master node.
+
+if [ -z "${SPARK_HOME}" ]; then
+  export SPARK_HOME="$(cd "`dirname "$0"`"/..; pwd)"
+fi
+
+# Load the Spark configuration
+. "${SPARK_HOME}/sbin/spark-config.sh"
+
+# Stop the workers, then the master
+"${SPARK_HOME}/sbin"/stop-workers.sh
+"${SPARK_HOME}/sbin"/stop-master.sh
+
+if [ "$1" == "--wait" ]
+then
+  printf "Waiting for workers to shut down..."
+  while true
+  do
+    running=`${SPARK_HOME}/sbin/workers.sh ps -ef | grep -v grep | grep deploy.worker.Worker`
+    if [ -z "$running" ]
+    then
+      printf "\nAll workers successfully shut down.\n"
+      break
+    else
+      printf "."
+      sleep 10
+    fi
+  done
+fi
