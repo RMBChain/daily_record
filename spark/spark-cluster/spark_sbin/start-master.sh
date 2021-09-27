@@ -61,7 +61,7 @@ if [ "$SPARK_MASTER_HOST" = "" ]; then
 fi
 
 if [ "$SPARK_MASTER_WEBUI_PORT" = "" ]; then
-  SPARK_MASTER_WEBUI_PORT=8080
+  SPARK_MASTER_WEBUI_PORT=8001
 fi
 
 "${SPARK_HOME}/sbin"/spark-daemon.sh start $CLASS 1 \

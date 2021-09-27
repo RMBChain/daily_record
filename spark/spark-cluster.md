@@ -13,7 +13,7 @@ docker build -f spark-cluster.dockerfile -t spark-3.1.2-hadoop3.2.2:v1 .
 docker network create -d bridge spark_network
 docker run -it --name master --hostname master -w /spark-3.1.2          \
        --rm --network spark_network                                     \
-       -p 4040:4040 -p 7077:7077 -p 8042:8042 -p 8080:8080 -p 8081:8081 \
+       -p 4040:4040 -p 7077:7077 -p 8042:8042 -p 8001:8001 -p 8081:8081 \
        -p 8088:8088 -p 9000:9000 -p 9864:9864 -p 9870:9870              \
        spark-3.1.2-hadoop3.2.2:v1 bash -c "/entyrpoint-master.sh"
 ```
@@ -31,7 +31,7 @@ docker run -it --name work3 --hostname work3 -w /spark-3.1.2 --rm -m 1G --networ
 # 3. 查看状态
 http://localhost:9870  hadoop
 http://localhost:8088  yarn
-http://localhost:8080  spark
+http://localhost:8001  spark
 
 
 # 4. 测试1
@@ -41,12 +41,26 @@ http://localhost:8080  spark
 
 
 # 5. 测试2
+上传数据文件
 ```
-/hadoop-3.3.1/bin/hdfs dfs -mkdir /input                   # 添加目录
-/hadoop-3.3.1/bin/hdfs dfs -put   etc/hadoop/*.xml /input  # 添加文件到新建的目录中
-/spark-3.1.2-bin-hadoop3.2/bin/spark-shell                 # 进入spark-shell
-
-待续......
-
+/hadoop-3.2.2/bin/hdfs dfs -mkdir /input                   # 添加目录
+/hadoop-3.2.2/bin/hdfs dfs -put   /hadoop-3.2.2/etc/hadoop/*.xml /input  # 添加文件到新建的目录中
 ```
 
+进入spark-shell
+```
+/spark-3.1.2/bin/spark-shell
+
+val textFile = sc.textFile("hdfs://master:9000/input/core-site.xml")
+# val textFile = sc.textFile("/input/core-site.xml")
+
+val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+
+counts.saveAsTextFile("hdfs://master:9000/result")  
+# counts.saveAsTextFile("/result")             
+```
+
+查看结果
+```
+/hadoop-3.2.2/bin/hdfs dfs -cat  /result/*
+```
