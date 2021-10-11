@@ -22,6 +22,11 @@ minikube dashboard
 minikube kubectl -- get po -A
 ```
 
+# 创建kubectl快捷方式
+```
+alias kubectl="minikube kubectl --"
+```
+
 # 创建deployment并expose
 ```
 minikube kubectl -- create deployment hello-minikube1 --image=nginx:latest
