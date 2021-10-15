@@ -1,0 +1,8 @@
+---
+- hosts: web 
+  tasks: 
+    - name: Install Nginx 
+      apt: 
+        name: nginx
+    - name: Start Nginx
+      shell:  "nginx"

@@ -1,0 +1,8 @@
+
+[web]
+ansible-worker1
+ansible-worker3        
+
+[db]
+ansible-worker1
+ansible-worker2
