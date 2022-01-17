@@ -5,14 +5,17 @@
 - https://hub.docker.com/_/docker
 
 # DIND
+```
+cd D:\_git\gitee.com\turingchain\daily_record\jenkins-dind-maven-npm-git
 docker rm -f dind
-export CertDir=/vmdata/catchfly/tmp/cert
+# export CertDir=/vmdata/catchfly/tmp/cert
+export /mnt/d/_git/gitee.com/turingchain/daily_record/jenkins-dind-maven-npm-git/cert
 docker run -d   -e DOCKER_TLS_CERTDIR=/certs -v $CertDir/client:/certs/client    -v $CertDir/ca:/certs/ca --privileged       --name dind --restart always docker:20.10.12-dind
 docker run --rm -e DOCKER_TLS_CERTDIR=/certs -v $CertDir/client:/certs/client:ro                          --link dind:docker                              docker:20.10.12 version
 docker run -it  -e DOCKER_TLS_CERTDIR=/certs -v $CertDir/client:/certs/client:ro                          --link dind:docker                              docker:20.10.12 sh
+```
 
-
-
+```
 jdk8      
   wget https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u292-b10/openlogic-openjdk-8u292-b10-linux-x64.tar.gz
 jenkins
@@ -24,10 +27,12 @@ git
 node
   wget https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.xz
 verdaccio 
+```
 
+```
 
 docker rmi cicd:v1
 docker build -f cicd.dockerfile -t cicd:v1 .
 
 docker run --rm -it -w /software cicd:v1 sh
-
+```
