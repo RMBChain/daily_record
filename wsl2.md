@@ -22,9 +22,7 @@ wsl -s Ubuntu-18.04
 ```
 
 # 修改默认用户为root  
-
 https://blog.csdn.net/jokeshe/article/details/107239159
-
 # 在powershell中运行
 ```
 Ubuntu1804 config --default-user root
@@ -146,10 +144,10 @@ cd /opt/GoLand-2017.3.3/bin
 ```
 
 # 配置 WSL2 访问 Windows 上的代理
-```
 https://zhuanlan.zhihu.com/p/153124468
+```
 cat /etc/resolv.conf
-export ALL_PROXY="http://172.19.80.1:7890"
+export ALL_PROXY="http://192.168.1.117:33210"
 ```
 
 # 无法访问网络的解决办法

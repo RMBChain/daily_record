@@ -111,10 +111,10 @@ docker run -d --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_HOST='%' 
 docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin:5.1.0
 ```
 
-单部署
+单部署 mysql5
 ```bash
-docker rm -f mysql
-docker run -d --name mysql   \
+docker rm -f mysql5
+docker run -d --name mysql5   \
       --restart always       \
       -p 3306:3306           \
       -e MYSQL_ROOT_HOST='%'         `# 开启root的远程访问`    \
@@ -123,6 +123,25 @@ docker run -d --name mysql   \
       -v /home/mysql/conf:/etc/mysql/conf.d `#配置文件挂载到当前宿主机的/home/mysql/conf` \
       -v /home/mysql/data:/var/lib/mysql    `#数据挂载到当前宿主机的 /home/mysql/data`    \
       mysql:5.7.31                                                \
+      --character-set-server=utf8mb4        `# 设置字符编码`      \
+      --collation-server=utf8mb4_unicode_ci `# 设置字符编码`      \
+      --lower_case_table_names=1            `# 表名不区分大小写`
+
+docker logs -f mysql
+```
+
+单部署 mysql8
+```bash
+docker rm -f mysql8
+docker run -d --name mysql8   \
+      --restart always       \
+      -p 3306:3306           \
+      -e MYSQL_ROOT_HOST='%'         `# 开启root的远程访问`    \
+      -e MYSQL_ROOT_PASSWORD=root    `# root用户的密码`        \
+      -e TZ=Asia/Shanghai           `# 设置时区`               \
+      -v /home/mysql/conf:/etc/mysql/conf.d `#配置文件挂载到当前宿主机的/home/mysql/conf` \
+      -v /home/mysql/data:/var/lib/mysql    `#数据挂载到当前宿主机的 /home/mysql/data`    \
+      mysql:8.0.33                                                \
       --character-set-server=utf8mb4        `# 设置字符编码`      \
       --collation-server=utf8mb4_unicode_ci `# 设置字符编码`      \
       --lower_case_table_names=1            `# 表名不区分大小写`
