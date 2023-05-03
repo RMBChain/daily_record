@@ -52,7 +52,7 @@ Java线程Dump分析： 是一款在线分析线程Dump文件的产品，将线�
 - PerfMa XElephant https://memory.console.perfma.com  
 Java内存Dump分析： 是一款在线分析Java内存Dump文件的产品。可以让内存里对象之间的各种依赖关系更加清晰明了，无需安装软件，提供上传方式，不受本地机器内存限制，支持超大Dump文件分析。
 
-- Fastt hread https://fastthread.io  
+- Fast thread https://fastthread.io  
  一个在线的 Thread dump分析网站，能帮助我们判断 CPU 峰值、死锁、内存异常、应用反应迟钝、响应时间变长和其他系统问题。
 
 - GC日志分析 https://gceasy.io/  
