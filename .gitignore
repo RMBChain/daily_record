@@ -2,3 +2,9 @@
 .settings/.jsdtscope
 .settings/org.eclipse.wst.jsdt.ui.superType.container
 .settings/org.eclipse.wst.jsdt.ui.superType.name
+/.idea/libraries/InteliJIDEA.xml
+/.idea/aws.xml
+/.idea/daily_record.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
