@@ -24,7 +24,7 @@ wsl -s Ubuntu-18.04
 # 修改默认用户为root  
 https://blog.csdn.net/jokeshe/article/details/107239159
 # 在powershell中运行
-```
+```bash
 Ubuntu1804 config --default-user root
 ```
 
@@ -34,22 +34,22 @@ https://winaero.com/export-import-wsl-linux-distro-windows-10/
 https://4sysops.com/archives/export-and-import-windows-subsystem-for-linux-wsl/
 
 # 导出WSL镜像
-```
+```bash
 wsl --export Ubuntu ubuntu.tar
 ```
 
 # 导入WSL镜像 （需要指定全路径）
-```
+```bash
 wsl --import Ubuntu-18.04-docker D:\wsl2Distribution\Ubuntu18.04Docker D:\wsl2Distribution\Ubuntu-18.04.tar --version 2
 ```
 
 # 删除现有的wsl子系统：
-```
+```bash
 wsl --unregister Ubuntu-18.04-registry
 ```
 
 # 运行指定的发现版本
-```
+```bash
 wsl -d Ubuntu-18.04-registry
 ```
 

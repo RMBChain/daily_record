@@ -1,4 +1,6 @@
-#
+
+# Daily Record
+
 ## Ubuntu18.04安装Docker
 #### 方式1
 ```bash

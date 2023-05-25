@@ -1,7 +1,6 @@
 # 搭建私有VPN
 *https://github.com/hwdsl2/setup-ipsec-vpn*
-#### 安装Server端
-需要打开 UDP 端口 500 和 4500 
+#### 安装Server端（需要打开 UDP 端口 500 和 4500）
 ```
 wget https://get.vpnsetup.net -O vpn.sh && sudo sh vpn.sh
 ```
@@ -36,27 +35,31 @@ wget https://get.vpnsetup.net -O vpn.sh && sudo sh vpn.sh
 - ThinkAdmin 后台管理系统
 
 # JAVA 调优工具  
-- Alibaba Arthas https://alibaba.github.io/arthas  
+- Alibaba *Arthas https://alibaba.github.io/arthas*  
 Arthas： 是Alibaba开源的Java诊断工具，深受开发者喜爱，当你遇到：这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？
 以上类似问题而束手无策时，Arthas可以帮助你解决。
 
-- Aliabba jvmGenerate https://render.alipay.com/p/s/jvm-generate  
+- Aliabba jvmGenerate *https://render.alipay.com/p/s/jvm-generate*  
 Aliabba jvmGenerate： 是一个提供 JVM 参数调优分析，JVM优化工具集，快速生成JVM优化配置，常见场景配置示例的工具网站。
 
-- PerfMa XXFox https://opts.console.perfma.com  
+- PerfMa XXFox *https://opts.console.perfma.com*  
 Java虚拟机参数分析： 是一款 PerfMa 资深专家对 JVM 源码的研究和多年性能调优实践经验而开发的工具，为用户学习和使用 JVM 参数提供很大的便利。即使不太懂 JVM 参数的初级用户，也可以借助 XXFox 得到相对合理的参数列表。
 
-- PerfMa XSheepdog https://thread.console.perfma.com  
+- PerfMa XSheepdog *https://thread.console.perfma.com*  
 Java线程Dump分析： 是一款在线分析线程Dump文件的产品，将线程、线程池、栈、方法及锁的关系梳理清楚，通过多种视角呈献给用户，让线程问题一目了然。
 
-- PerfMa XElephant https://memory.console.perfma.com  
+- PerfMa XElephant *https://memory.console.perfma.com*  
 Java内存Dump分析： 是一款在线分析Java内存Dump文件的产品。可以让内存里对象之间的各种依赖关系更加清晰明了，无需安装软件，提供上传方式，不受本地机器内存限制，支持超大Dump文件分析。
 
-- Fast thread https://fastthread.io  
+- Fast thread *https://fastthread.io*  
  一个在线的 Thread dump分析网站，能帮助我们判断 CPU 峰值、死锁、内存异常、应用反应迟钝、响应时间变长和其他系统问题。
 
-- GC日志分析 https://gceasy.io/  
+- GC日志分析 *https://gceasy.io/*  
 
-- 堆Dump可视化分析 https://heaphero.io/
+- 堆Dump可视化分析 *https://heaphero.io/*
 
+
+# 免注册邮箱 https://www.1secmail.com/  
+只能接受邮件，不能回复，没有密码。  
+可用于临时注册用。
 
